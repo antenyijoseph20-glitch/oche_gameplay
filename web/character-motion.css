@@ -1,0 +1,12 @@
+/* Character is anchored into each scene and glides across the island when travel succeeds. */
+.survivor-character { position: absolute; z-index: 5; left: 18%; bottom: 13%; width: clamp(54px, 9vw, 88px); height: 67%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 5px 5px rgb(0 0 0 / 48%)); transform: translateX(0); transition: left 700ms cubic-bezier(.2,.7,.25,1), bottom 500ms ease, filter 300ms ease; }
+.scene-jungle .survivor-character { left: 27%; bottom: 15%; }
+.scene-cave .survivor-character { left: 48%; bottom: 12%; filter: drop-shadow(0 0 12px rgb(132 205 216 / 32%)); }
+.scene-bridge .survivor-character { left: 60%; bottom: 11%; }
+.scene-lighthouse .survivor-character { left: 69%; bottom: 14%; }
+.survivor-character.is-walking { animation: survivor-step 420ms ease-in-out infinite alternate; }
+.scene-cave .survivor-character { filter: drop-shadow(0 0 10px rgb(132 205 216 / 35%)); }
+.scene-lighthouse.beacon-active .survivor-character { filter: drop-shadow(0 0 18px rgb(255 221 135 / 65%)); }
+@keyframes survivor-step { from { transform: translateY(0) rotate(-1deg); } to { transform: translateY(-4px) rotate(1deg); } }
+@media (max-width: 520px) { .survivor-character { width: 56px; height: 61%; } }
+@media (prefers-reduced-motion: reduce) { .survivor-character, .survivor-character.is-walking { animation: none !important; transition: none !important; } }

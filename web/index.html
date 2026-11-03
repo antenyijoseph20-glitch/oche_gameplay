@@ -8,10 +8,10 @@
     <title>Oche: Mystery Island</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="game-enhancements.css">
+    <link rel="stylesheet" href="wildlife.css">
     <link rel="stylesheet" href="character-motion.css">
     <link rel="stylesheet" href="audio-control.css">
     <script src="game.js" defer></script>
-    <script src="story.js" defer></script>
     <script src="ocean-audio.js" defer></script>
     <script src="character-motion.js" defer></script>
 </head>
@@ -56,6 +56,18 @@
                     <div class="scene-sky"><span class="scene-moon" aria-hidden="true"></span><span class="scene-cloud cloud-one" aria-hidden="true"></span><span class="scene-cloud cloud-two" aria-hidden="true"></span></div>
                     <div class="scene-island" aria-hidden="true"><span class="scene-tree tree-one">♠</span><span class="scene-tree tree-two">♠</span><span class="scene-landmark" id="scene-landmark">⌂</span></div>
                     <div class="scene-water" aria-hidden="true"><i></i><i></i><i></i></div>
+                    <svg class="wildlife" viewBox="0 0 900 300" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                        <g class="beach-birds">
+                            <g class="bird bird-one"><path d="M0 10 Q12 -2 24 10 Q36 -2 48 10"/></g>
+                            <g class="bird bird-two"><path d="M0 10 Q10 0 20 10 Q30 0 40 10"/></g>
+                            <g class="bird bird-three"><path d="M0 10 Q9 2 18 10 Q27 2 36 10"/></g>
+                            <g class="fishing-bird"><path d="M0 12 Q12 -1 24 10 Q37 -3 49 9 L59 5 L53 15 L43 13 Q31 4 25 15 Q13 3 0 12Z"/><path class="bird-wing" d="M20 9 Q28 -5 37 8"/><path class="fishing-line" d="M51 13 Q58 31 52 47"/><path class="fish" d="M46 48 Q53 42 60 48 Q53 54 46 48 M46 48l-4-4v8Z"/></g>
+                        </g>
+                        <g class="jungle-wildlife"><path class="parrot" d="M160 65 Q174 48 191 61 L202 78 188 77 182 96 170 83 157 87 166 75Z"/><path class="parrot-tail" d="m181 82 10 24-14-17"/><circle cx="184" cy="63" r="2" fill="#ffe7a5"/><g class="butterfly"><path d="M0 0 Q-13 -16 -12 -3 Q-12 8 0 2 Q12 8 12 -3 Q13 -16 0 0Z"/></g></g>
+                        <g class="cave-wildlife"><g class="bat bat-one"><path d="M0 12 Q7 0 14 9 Q21 0 28 12 L23 10 21 18 14 13 7 18 5 10Z"/></g><g class="bat bat-two"><path d="M0 12 Q7 0 14 9 Q21 0 28 12 L23 10 21 18 14 13 7 18 5 10Z"/></g></g>
+                        <g class="bridge-wildlife"><g class="bridge-gull"><path d="M0 12 Q12 -1 24 10 Q37 -3 49 9 L59 5 53 15 43 13 Q31 4 25 15 Q13 3 0 12Z"/></g><path class="bridge-fish" d="M520 252 Q534 242 548 252 Q534 262 520 252 M520 252l-9-8v16Z"/></g>
+                        <g class="lighthouse-wildlife"><g class="moth"><path d="M0 0 Q-8 -10 -10 -2 Q-9 5 0 2 Q9 5 10 -2 Q8 -10 0 0Z"/></g></g>
+                    </svg>
                     <img id="survivor-character" class="survivor-character" src="survivor.svg" alt="A strong, weathered island survivor crossing the rugged island">
                     <span id="scene-object" class="scene-object" aria-hidden="true"></span>
                     <span class="scene-caption" id="scene-caption">A quiet shore beneath a restless sky</span>
@@ -78,11 +90,7 @@
                     <aside class="inventory-card" aria-labelledby="inventory-title">
                         <h3 id="inventory-title">Your pack</h3>
                         <p id="inventory-display" aria-live="polite">Your inventory is empty.</p>
-                        <ul class="quest-list">
-                            <li id="rope-quest">Find the rope in the Jungle</li>
-                            <li id="lantern-quest">Find the lantern in the Cave</li>
-                            <li id="beacon-quest">Light the lighthouse beacon</li>
-                        </ul>
+                        <ul class="quest-list"><li id="rope-quest">Find the rope in the Jungle</li><li id="lantern-quest">Find the lantern in the Cave</li><li id="beacon-quest">Light the lighthouse beacon</li></ul>
                     </aside>
                 </div>
             </section>
@@ -94,13 +102,8 @@
 
             <section id="victory-scene" class="victory-scene" aria-label="Lighthouse rescue animation" aria-live="polite" hidden>
                 <div class="scene-heading"><p class="eyebrow">A SIGNAL IN THE DARK</p><h2>The rescue has begun!</h2><p>The lighthouse beacon is shining across the sea...</p></div>
-                <div class="rescue-stage"><div class="stars" aria-hidden="true"></div><div class="moon" aria-hidden="true"></div>
-                    <div class="lighthouse" aria-hidden="true"><div class="lighthouse-beam"></div><svg viewBox="0 0 100 190" class="lighthouse-art" xmlns="http://www.w3.org/2000/svg"><path d="M29 62 71 62 85 184 15 184Z" fill="#e8c995"/><path d="M25 62h50L68 45H32Z" fill="#e9ece9"/><rect x="29" y="24" width="42" height="22" rx="3" fill="#f2dcae"/><path d="M23 24h54L68 12H32Z" fill="#d75c4c"/><path d="m42 12 8-10 8 10Z" fill="#d75c4c"/><rect x="42" y="29" width="16" height="14" rx="2" fill="#fff7c7"/><rect x="44" y="85" width="12" height="22" fill="#263e46"/><rect x="44" y="126" width="12" height="22" fill="#263e46"/></svg></div>
-                    <svg class="rescue-boat" viewBox="0 0 180 90" role="img" aria-label="Rescue boat approaching the island" xmlns="http://www.w3.org/2000/svg"><path d="M10 55h160l-20 24H38Z" fill="#d75c4c"/><path d="M63 25h62v30H63z" fill="#f4f1e8"/><rect x="76" y="31" width="16" height="15" fill="#67b8bd"/><rect x="98" y="31" width="16" height="15" fill="#67b8bd"/><path d="M30 84q20-9 40 0t40 0 40 0" fill="none" stroke="#67d5c1" stroke-width="3"/></svg>
-                    <div class="ocean-waves" aria-hidden="true"></div>
-                </div><p class="scene-status"><span class="loading-indicator"></span>A rescue boat is approaching...</p>
+                <div class="rescue-stage"><div class="stars" aria-hidden="true"></div><div class="moon" aria-hidden="true"></div><div class="lighthouse" aria-hidden="true"><div class="lighthouse-beam"></div><svg viewBox="0 0 100 190" class="lighthouse-art" xmlns="http://www.w3.org/2000/svg"><path d="M29 62 71 62 85 184 15 184Z" fill="#e8c995"/><path d="M25 62h50L68 45H32Z" fill="#e9ece9"/><rect x="29" y="24" width="42" height="22" rx="3" fill="#f2dcae"/><path d="M23 24h54L68 12H32Z" fill="#d75c4c"/><path d="m42 12 8-10 8 10Z" fill="#d75c4c"/><rect x="42" y="29" width="16" height="14" rx="2" fill="#fff7c7"/></svg></div><svg class="rescue-boat" viewBox="0 0 180 90" role="img" aria-label="Rescue boat approaching the island" xmlns="http://www.w3.org/2000/svg"><path d="M10 55h160l-20 24H38Z" fill="#d75c4c"/><path d="M63 25h62v30H63z" fill="#f4f1e8"/><rect x="76" y="31" width="16" height="15" fill="#67b8bd"/><rect x="98" y="31" width="16" height="15" fill="#67b8bd"/></svg><div class="ocean-waves" aria-hidden="true"></div></div><p class="scene-status"><span class="loading-indicator"></span>A rescue boat is approaching...</p>
             </section>
-
             <section id="ending-panel" class="panel ending-panel" aria-live="polite" hidden><h2 id="ending-title">Adventure ended</h2><p id="ending-message"></p><button id="replay-button" class="primary-button" type="button">Play again</button></section>
             <div class="quit-area"><button id="quit-button" class="text-button" type="button">End this adventure</button></div>
         </section>

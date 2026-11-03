@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 190" role="img" aria-labelledby="title desc">
+  <title id="title">Weathered island survivor</title>
+  <desc id="desc">A strong older explorer in a sea-worn coat, carrying a walking stick and pack.</desc>
+  <defs>
+    <linearGradient id="coat" x1="25" y1="70" x2="95" y2="180" gradientUnits="userSpaceOnUse"><stop stop-color="#59635c"/><stop offset="1" stop-color="#293a3b"/></linearGradient>
+    <linearGradient id="skin" x1="45" y1="18" x2="78" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#d7ab7d"/><stop offset="1" stop-color="#936a52"/></linearGradient>
+  </defs>
+  <!-- boots and sturdy walking stance -->
+  <path d="m40 153-5 25q-1 5 5 5h20l2-5-13-7 5-18Zm34 0 3 24q0 5 6 5h18l2-5-17-8 1-17Z" fill="#302b27" stroke="#17262a" stroke-width="2"/>
+  <!-- trousers -->
+  <path d="m42 112 39 1 5 47-20 3-6-29-6 29-20-2Z" fill="#4c5149" stroke="#293532" stroke-width="2"/>
+  <!-- weathered coat and shoulders -->
+  <path d="m43 68-15 8-9 45 13 5 7-25 1 35q21 13 48 0l1-37 8 27 13-5-10-43-17-10Z" fill="url(#coat)" stroke="#1c3032" stroke-width="3" stroke-linejoin="round"/>
+  <path d="m54 70 8 15 9-15 8 6-10 22 4 36-12 8-11-8 5-36-10-22Z" fill="#b4a080" stroke="#3b4540" stroke-width="2"/>
+  <path d="M31 89 21 120m70-28 9 28" stroke="#c2a475" stroke-width="4" stroke-linecap="round"/>
+  <!-- pack and straps -->
+  <path d="m29 79-10 5 2 38 12 3 4-36Zm53-6 15 5-4 30-10-3Z" fill="#765b3e" stroke="#3e382e" stroke-width="2"/>
+  <path d="m43 70 10 27m25-26-8 27" fill="none" stroke="#c2a475" stroke-width="3"/>
+  <!-- head, silver hair and lined face -->
+  <path d="M43 32q0-22 19-24 21 1 22 23l-5 22q-5 14-18 15-15-3-18-18Z" fill="url(#skin)" stroke="#704f40" stroke-width="2"/>
+  <path d="M42 34Q35 13 55 7q19-7 29 10l-2 12-9-8-8 7-7-8-8 10Z" fill="#b9b8a9" stroke="#686a62" stroke-width="2"/>
+  <path d="M48 38q5-4 10 0m10 0q5-4 10 0" fill="none" stroke="#493c34" stroke-width="2"/>
+  <circle cx="55" cy="39" r="1.7" fill="#1b2527"/><circle cx="73" cy="39" r="1.7" fill="#1b2527"/>
+  <path d="m63 40-3 9 5 1m-13 6q11 6 21-1" fill="none" stroke="#714e3d" stroke-width="2" stroke-linecap="round"/>
+  <path d="M50 52q12 11 25-1l-4 11q-10 9-17 0Z" fill="#c4c0af"/>
+  <!-- walking staff -->
+  <path d="M104 85q9-9 12 0l-4 8-2 90" fill="none" stroke="#584633" stroke-width="5" stroke-linecap="round"/>
+  <path d="m109 183 8 1" stroke="#282820" stroke-width="4" stroke-linecap="round"/>
+</svg>
