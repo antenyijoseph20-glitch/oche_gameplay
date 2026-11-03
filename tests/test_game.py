@@ -454,6 +454,18 @@ class TestIslandMap(unittest.TestCase):
         self.assertIn("Rope: Jungle (Collected)", island_map)
         self.assertIn("Lantern: Cave (Collected)", island_map)
 
+    def test_viewing_map_does_not_change_player_state(self):
+        player = new_game("Oche")
+        player["location"] = "Jungle"
+        player["inventory"].append("rope")
+
+        original_state = player.copy()
+        original_state["inventory"] = player["inventory"].copy()
+
+        describe_map(player)
+
+        self.assertEqual(player, original_state)
+
 
 if __name__ == "__main__":
     unittest.main()
