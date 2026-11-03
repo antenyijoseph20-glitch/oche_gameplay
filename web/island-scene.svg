@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 820" fill="none">
+  <defs>
+    <linearGradient id="sea" x1="800" y1="390" x2="800" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#397987" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#061c2a" stop-opacity=".96"/>
+    </linearGradient>
+    <linearGradient id="island" x1="800" y1="280" x2="800" y2="510" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#536f5d"/>
+      <stop offset="1" stop-color="#182f34"/>
+    </linearGradient>
+    <linearGradient id="tower" x1="1327" y1="190" x2="1350" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e4d3ae"/>
+      <stop offset="1" stop-color="#9e8d70"/>
+    </linearGradient>
+    <radialGradient id="moon-glow" cx="0" cy="0" r="1" gradientTransform="matrix(0 102 -102 0 1250 120)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f3dfaa" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#f3dfaa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="1250" cy="120" r="102" fill="url(#moon-glow)"/>
+  <circle cx="1250" cy="120" r="34" fill="#f1dfb6" fill-opacity=".78"/>
+  <path d="M0 400c165-17 281-14 430 0s283 15 430 0 276-15 420 0 207 14 320-1v421H0V400Z" fill="url(#sea)"/>
+  <path d="M0 452c123-16 193-16 315 0s195 16 317 0 196-16 318 0 196 16 318 0 211-17 332 0" stroke="#a1d9cf" stroke-opacity=".2" stroke-width="3"/>
+  <path d="M0 526c132-14 205-14 337 0s205 14 337 0 205-14 337 0 205 14 337 0 120-10 252 1" stroke="#a1d9cf" stroke-opacity=".15" stroke-width="3"/>
+  <path d="M0 635c144-15 224-15 368 0s224 15 368 0 224-15 368 0 224 15 368 0 84-8 128 0" stroke="#a1d9cf" stroke-opacity=".12" stroke-width="3"/>
+  <path d="M0 416c153-27 259-69 351-91 70-17 112-55 174-61 66-6 114 28 174 31 70 4 123-39 195-30 70 8 112 57 177 64 66 8 131-21 198-8 91 17 189 73 331 95v78H0v-78Z" fill="url(#island)"/>
+  <path d="M342 399c88-74 133-78 196-128 67-52 112 12 178 10 69-2 111-53 182-28 48 17 78 54 148 65 50 8 88-5 138 17l-15 46H342Z" fill="#29483e" fill-opacity=".83"/>
+  <!-- Ancient lighthouse on the island ridge -->
+  <path d="m1306 197 84 0 36 275h-157l37-275Z" fill="url(#tower)"/>
+  <path d="M1306 197h84l8 40h-100l8-40Z" fill="#d9d4c3"/>
+  <path d="m1290 197 16-28h84l16 28h-116Z" fill="#a95045"/>
+  <path d="m1324 169 34 0-17-24-17 24Z" fill="#a95045"/>
+  <rect x="1321" y="207" width="54" height="42" rx="4" fill="#f2d89e"/>
+  <rect x="1333" y="216" width="30" height="25" rx="2" fill="#526a69"/>
+  <path d="M1302 254h92M1297 319h101M1289 391h117" stroke="#715f4b" stroke-opacity=".8" stroke-width="7"/>
+  <path d="M1268 474h198" stroke="#172d32" stroke-width="12"/>
+  <!-- Wind-shaped coastal trees -->
+  <path d="M489 402c12-48 12-84 3-118m0 0c-20-12-34-27-39-45 24 6 39 19 46 37m-7 8c14-25 34-40 57-42-10 22-27 39-52 50m-43-15c-20-2-37-11-51-28 22-1 42 5 61 19" stroke="#18342e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M567 387c8-32 8-56 2-79m0 0c-16-9-27-21-31-36 19 5 31 15 37 29m-6 6c11-20 27-32 45-34-8 18-21 31-41 40m-34-12c-16-2-30-9-41-23 18-1 34 4 49 15" stroke="#1c3931" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M0 493c110-12 193-12 303 0m420 28c106-10 174-10 280 0m312-19c115-10 191-10 306 0" stroke="#d5ebe0" stroke-opacity=".12" stroke-width="2"/>
+</svg>
