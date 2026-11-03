@@ -1,0 +1,128 @@
+/* Epic, storybook-cinematic survivor and island lighting. */
+:root {
+    --storm-ink: #07151e;
+    --torch-gold: #ffd58a;
+    --mist-blue: #a5d4d7;
+}
+
+.site-header h1 {
+    text-shadow: 0 3px 24px rgb(3 12 18 / 75%), 0 0 34px rgb(246 215 157 / 15%);
+}
+
+.location-scene {
+    border-color: rgb(223 204 162 / 36%);
+    box-shadow: inset 0 0 50px rgb(2 10 16 / 32%), 0 10px 32px rgb(0 0 0 / 25%);
+    background-size: 100% 100%;
+    transition: filter 700ms ease, background 700ms ease;
+}
+
+.location-scene::after {
+    position: absolute;
+    z-index: 6;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgb(5 15 22 / 5%), transparent 48%, rgb(3 12 17 / 27%));
+    content: "";
+}
+
+.scene-jungle {
+    filter: saturate(.88) contrast(1.08);
+}
+
+.scene-jungle .scene-island {
+    box-shadow: inset 0 18px 30px rgb(3 15 12 / 34%);
+}
+
+.scene-jungle .scene-tree {
+    text-shadow: 7px 5px 0 #182c26, 0 0 16px rgb(8 19 14 / 70%);
+}
+
+.scene-cave {
+    filter: saturate(.78) contrast(1.16);
+}
+
+.scene-cave .scene-island {
+    box-shadow: 0 -12px 35px rgb(104 190 205 / 13%);
+}
+
+.scene-cave::before {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 54% 72%, rgb(125 201 213 / 19%), transparent 48%);
+    content: "";
+    animation: cave-glow 5s ease-in-out infinite alternate;
+}
+
+.scene-bridge {
+    filter: contrast(1.13) saturate(.8);
+}
+
+.scene-bridge::before {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 38%, rgb(4 13 19 / 38%) 50%, transparent 64%);
+    content: "";
+}
+
+.scene-lighthouse {
+    filter: saturate(.92) contrast(1.1);
+}
+
+.scene-lighthouse .scene-landmark {
+    text-shadow: 0 0 15px rgb(255 222 139 / 55%), 0 0 38px rgb(255 195 92 / 34%);
+}
+
+.scene-lighthouse.beacon-active::before {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(112deg, transparent 12%, rgb(255 229 166 / 18%) 48%, transparent 76%);
+    content: "";
+    animation: beacon-flare 3.8s ease-in-out infinite alternate;
+}
+
+.survivor-character {
+    filter: drop-shadow(0 7px 6px rgb(0 0 0 / 62%));
+}
+
+.survivor-character.is-walking {
+    animation: survivor-stride 360ms ease-in-out infinite alternate;
+}
+
+.location-scene.scene-lighthouse.beacon-active .survivor-character {
+    filter: drop-shadow(0 0 8px rgb(255 222 139 / 75%)) drop-shadow(0 7px 5px rgb(0 0 0 / 55%));
+}
+
+.scene-caption {
+    border-left: 2px solid rgb(255 222 153 / 72%);
+    padding: 3px 8px;
+    background: linear-gradient(90deg, rgb(4 17 23 / 58%), transparent);
+}
+
+@keyframes survivor-stride {
+    from { transform: translateY(0) rotate(-1.5deg) scaleX(.99); }
+    to { transform: translateY(-5px) rotate(1.5deg) scaleX(1.01); }
+}
+
+@keyframes cave-glow {
+    from { opacity: .48; }
+    to { opacity: 1; }
+}
+
+@keyframes beacon-flare {
+    from { opacity: .35; }
+    to { opacity: .9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scene-cave::before,
+    .scene-lighthouse.beacon-active::before {
+        animation: none !important;
+    }
+}
