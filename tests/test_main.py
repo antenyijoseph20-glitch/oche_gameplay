@@ -46,10 +46,10 @@ class TestGameReplay(unittest.TestCase):
 
         output = self.run_game_with_inputs([
             "Oche",
-            "7",
+            "6",
             "y",
-            "5",
-            "7",
+            "4",
+            "6",
             "n",
         ])
 
@@ -66,15 +66,15 @@ class TestGameReplay(unittest.TestCase):
 
         output = self.run_game_with_inputs([
             "Oche",
-            "3", "Jungle",
-            "4", "rope",
-            "3", "Cave",
-            "4", "lantern",
-            "3", "Old Bridge",
-            "3", "Lighthouse",
-            "6",
+            "1", "Jungle",
+            "2", "y",
+            "1", "Cave",
+            "2", "y",
+            "1", "Old Bridge",
+            "1", "Lighthouse",
+            "2",
             "y",
-            "7",
+            "6",
             "n",
         ])
 
@@ -90,13 +90,13 @@ class TestGameReplay(unittest.TestCase):
 
         output = self.run_game_with_inputs([
             "Oche",
-            "3", "Jungle",
-            "3", "Beach",
-            "3", "Jungle",
-            "3", "Beach",
-            "3", "Jungle",
+            "1", "Jungle",
+            "1", "Beach",
+            "1", "Jungle",
+            "1", "Beach",
+            "1", "Jungle",
             "y",
-            "7",
+            "6",
             "n",
         ])
 
@@ -112,7 +112,7 @@ class TestGameReplay(unittest.TestCase):
 
         output = self.run_game_with_inputs([
             "Oche",
-            "7",
+            "6",
             "maybe",
             "n",
         ])

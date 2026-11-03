@@ -9,8 +9,11 @@ from game import (
     available_actions,
     available_destinations,
     describe_location,
+    describe_map,
     get_status,
     move_player,
+    collect_item,
+    light_beacon,
     apply_action,
     is_win,
     is_game_over,
@@ -323,6 +326,19 @@ class TestInventory(unittest.TestCase):
         self.assertTrue(result["success"])
         self.assertIn("rope", self.player["inventory"])
 
+    def test_direct_collection_is_rejected_after_game_over(self):
+        self.player["location"] = "Jungle"
+        self.player["game_over"] = True
+
+        original_state = self.player.copy()
+        original_state["inventory"] = self.player["inventory"].copy()
+
+        result = collect_item(self.player, "rope")
+
+        self.assertFalse(result["success"])
+        self.assertIn("already ended", result["message"].casefold())
+        self.assertEqual(self.player, original_state)
+
 
 class TestBeacon(unittest.TestCase):
     """Test lighthouse beacon requirements and victory."""
@@ -382,6 +398,61 @@ class TestBeacon(unittest.TestCase):
         self.assertFalse(result["success"])
         self.assertIn("already ended", result["message"].casefold())
 
+    def test_direct_beacon_lighting_is_rejected_after_game_over(self):
+        self.player["game_over"] = True
+
+        original_state = self.player.copy()
+        original_state["inventory"] = self.player["inventory"].copy()
+
+        result = light_beacon(self.player)
+
+        self.assertFalse(result["success"])
+        self.assertIn("already ended", result["message"].casefold())
+        self.assertEqual(self.player, original_state)
+
+class TestIslandMap(unittest.TestCase):
+    """Test the island map representation."""
+
+    def test_map_shows_all_locations(self):
+        player = new_game("Oche")
+
+        island_map = describe_map(player)
+
+        for location in (
+            "Beach",
+            "Jungle",
+            "Cave",
+            "Old Bridge",
+            "Lighthouse",
+        ):
+            with self.subTest(location=location):
+                self.assertIn(location, island_map)
+
+    def test_map_marks_current_location(self):
+        player = new_game("Oche")
+        player["location"] = "Cave"
+
+        island_map = describe_map(player)
+
+        self.assertIn("Cave", island_map)
+        self.assertIn("You are here", island_map)
+
+    def test_map_shows_item_availability(self):
+        player = new_game("Oche")
+
+        island_map = describe_map(player)
+
+        self.assertIn("Rope: Jungle (Available)", island_map)
+        self.assertIn("Lantern: Cave (Available)", island_map)
+
+    def test_map_updates_after_collecting_items(self):
+        player = new_game("Oche")
+        player["inventory"].extend(["rope", "lantern"])
+
+        island_map = describe_map(player)
+
+        self.assertIn("Rope: Jungle (Collected)", island_map)
+        self.assertIn("Lantern: Cave (Collected)", island_map)
 
 
 if __name__ == "__main__":

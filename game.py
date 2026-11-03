@@ -126,6 +126,41 @@ def describe_location(player):
         "You are somewhere on Mystery Island.",
     )
 
+def describe_map(player):
+    """Return a map of Mystery Island and the player's current position."""
+
+    locations = (
+        "Beach",
+        "Jungle",
+        "Cave",
+        "Old Bridge",
+        "Lighthouse",
+    )
+
+    map_line = " <--> ".join(locations)
+    current_position = map_line.index(player["location"])
+
+    rope_status = (
+        "Collected" if "rope" in player["inventory"] else "Available"
+    )
+    lantern_status = (
+        "Collected" if "lantern" in player["inventory"] else "Available"
+    )
+
+    return (
+        "\n"
+        "                 MYSTERY ISLAND MAP\n"
+        "============================================================\n"
+        f"{map_line}\n"
+        f"{' ' * current_position}^\n"
+        f"{' ' * current_position}You are here\n"
+        "============================================================\n"
+        f"Rope: Jungle ({rope_status})\n"
+        f"Lantern: Cave ({lantern_status})\n"
+        "Bridge: A rope is required to reach the Lighthouse.\n"
+        "Connections: Travel is possible between adjacent locations."
+    )
+
 
 def get_status(player):
     """Return a readable summary of the player's current state."""
@@ -149,6 +184,12 @@ def collect_item(player, item):
         return {
             "success": False,
             "message": "Invalid item. Enter a valid item name.",
+        }
+
+    if is_game_over(player):
+        return {
+            "success": False,
+            "message": "The game has already ended.",
         }
 
     item = item.strip().casefold()
@@ -217,7 +258,7 @@ def move_player(player, destination):
             ),
         }
 
-    # The rope is collected in the Jungle.
+    # The rope is required to cross from the Old Bridge to the Lighthouse.
     if (
         player["location"] == "Old Bridge"
         and valid_destination == "Lighthouse"
@@ -234,6 +275,7 @@ def move_player(player, destination):
     if player["energy"] <= 0:
         player["energy"] = 0
         player["game_over"] = True
+
         return {
             "success": False,
             "message": "You have run out of energy. Your adventure is over.",
@@ -263,8 +305,15 @@ def move_player(player, destination):
         ),
     }
 
+
 def light_beacon(player):
     """Light the lighthouse beacon and complete the adventure."""
+
+    if is_game_over(player):
+        return {
+            "success": False,
+            "message": "The game has already ended.",
+        }
 
     if player["location"] != "Lighthouse":
         return {
@@ -303,6 +352,7 @@ def light_beacon(player):
         ),
     }
 
+
 def apply_action(player, action):
     """Process a game action and return its result."""
 
@@ -340,10 +390,9 @@ def apply_action(player, action):
             "success": True,
             "message": f"Inventory: {inventory_text}",
         }
-    
+
     if action.casefold() == "light beacon":
         return light_beacon(player)
-    
 
     command_parts = action.split(maxsplit=1)
 
@@ -377,3 +426,7 @@ def is_game_over(player):
     """Return True if the game has ended."""
 
     return player["game_over"]
+
+
+if __name__ == "__main__":
+    unittest.main()

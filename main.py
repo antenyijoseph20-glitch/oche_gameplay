@@ -6,6 +6,7 @@ from game import (
     normalize_player_name,
     apply_action,
     available_destinations,
+    describe_map,
     is_game_over,
 )
 
@@ -79,14 +80,12 @@ def display_menu():
     """Display the available menu options."""
 
     print("\nWhat would you like to do?")
-    print("1. Look around")
-    print("2. Check player status")
-    print("3. Move to another location")
-    print("4. Collect an item")
-    print("5. View inventory")
-    print("6. Light the lighthouse beacon")
-    print("7. Quit game")
-
+    print("1. Move to another location")
+    print("2. Explore and collect objects")
+    print("3. Inspect current location")
+    print("4. Check inventory")
+    print("5. View island map")
+    print("6. Quit game")
 
 def handle_movement(player):
     """Ask the player where they want to move."""
@@ -110,7 +109,7 @@ def handle_movement(player):
 
     destination = read_input(
         "\nWhere would you like to go? "
-        "(Enter a location, 'back' to cancel, or '7' to quit): "
+        "(Enter a location, 'back' to cancel, or '6' to quit): "
     ).strip()
 
     if not destination:
@@ -121,7 +120,7 @@ def handle_movement(player):
         print("\nMovement cancelled.")
         return
 
-    if destination.casefold() in ("7", "quit", "exit"):
+    if destination.casefold() in ("6", "quit", "exit"):
         raise GameExit
 
     if destination.casefold().startswith(("go ", "move ")):
@@ -134,35 +133,55 @@ def handle_movement(player):
 
 
 def handle_collection(player):
-    """Ask the player which item they want to collect."""
+    """Allow the player to collect the object at the current location."""
 
-    print("\nItems available in this adventure:")
-    print("- Rope (Jungle)")
-    print("- Lantern (Cave)")
+    available_items = {
+        "Jungle": "rope",
+        "Cave": "lantern",
+    }
 
-    item = read_input(
-        "\nWhich item would you like to collect? "
-        "('back' to cancel, or '7' to quit): "
-    ).strip()
+    item = available_items.get(player["location"])
 
-    if not item:
-        print("\nNo item entered. Collection cancelled.")
+    if item is None:
+        print("\nThere is nothing available to collect here.")
         return
 
-    if item.casefold() == "back":
-        print("\nCollection cancelled.")
+    print(f"\nYou have found a {item}.")
+
+    if item in player["inventory"]:
+        print(f"You have already collected the {item}.")
         return
 
-    if item.casefold() in ("7", "quit", "exit"):
-        raise GameExit
+    response = read_input(
+        f"\nWould you like to collect the {item}? "
+        "(Enter y or n): "
+    ).strip().casefold()
 
-    if item.casefold().startswith("collect "):
-        action = item
+    if response in ("y", "yes"):
+        result = apply_action(player, f"collect {item}")
+        print(f"\n{result['message']}")
+
+    elif response in ("n", "no", ""):
+        print("\nYou decided not to collect the item.")
+
     else:
-        action = f"collect {item}"
+        print("\nInvalid response. Collection cancelled.")
 
-    result = apply_action(player, action)
-    print(f"\n{result['message']}")
+def handle_exploration(player):
+    """Handle exploration actions based on the current location."""
+
+    location = player["location"]
+
+    if location in ("Jungle", "Cave"):
+        handle_collection(player)
+
+    elif location == "Lighthouse":
+        result = apply_action(player, "light beacon")
+        print(f"\n{result['message']}")
+
+    else:
+        print("\nYou explore your surroundings.")
+        print("There are no objects to collect here.")
 
 
 def ask_replay():
@@ -194,48 +213,42 @@ def play_game(player):
 
         choice = read_input("\nEnter your choice: ").strip().casefold()
 
-        if choice in ("7", "quit", "exit"):
+        if choice in ("6", "quit", "exit"):
             raise GameExit
 
-        if choice == "1":
+        elif choice == "1":
+            handle_movement(player)
+
+        elif choice == "2":
+            handle_exploration(player)
+
+        elif choice == "3":
             result = apply_action(player, "look")
             print(f"\n{result['message']}")
 
-        elif choice == "2":
-            result = apply_action(player, "status")
-            print(f"\n{result['message']}")
-
-        elif choice == "3":
-            handle_movement(player)
-
         elif choice == "4":
-            handle_collection(player)
-
-        elif choice == "5":
             result = apply_action(player, "inventory")
             print(f"\n{result['message']}")
 
-        elif choice == "6":
-            result = apply_action(player, "light beacon")
-            print(f"\n{result['message']}")
-
+        elif choice == "5":
+            print(describe_map(player))
         else:
             print(
                 "\nInvalid menu choice. "
-                "Please enter a number from 1 to 7."
+                "Please enter a number from 1 to 6."
             )
 
     if player["won"]:
         print("\n=============================================")
         print("             ADVENTURE COMPLETED!")
         print("=============================================")
+
     else:
         print("\n=============================================")
         print("              GAME OVER")
         print("=============================================")
         print("You have run out of energy. The rescue boat")
         print("could not find you in time.")
-
 
 def main():
     """Run the Oche: Mystery Island game with replay support."""
