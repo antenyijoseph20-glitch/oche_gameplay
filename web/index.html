@@ -8,9 +8,12 @@
     <title>Oche: Mystery Island</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="game-enhancements.css">
+    <link rel="stylesheet" href="character-motion.css">
+    <link rel="stylesheet" href="audio-control.css">
     <script src="game.js" defer></script>
     <script src="story.js" defer></script>
     <script src="ocean-audio.js" defer></script>
+    <script src="character-motion.js" defer></script>
 </head>
 <body>
     <main class="app">
@@ -53,6 +56,7 @@
                     <div class="scene-sky"><span class="scene-moon" aria-hidden="true"></span><span class="scene-cloud cloud-one" aria-hidden="true"></span><span class="scene-cloud cloud-two" aria-hidden="true"></span></div>
                     <div class="scene-island" aria-hidden="true"><span class="scene-tree tree-one">♠</span><span class="scene-tree tree-two">♠</span><span class="scene-landmark" id="scene-landmark">⌂</span></div>
                     <div class="scene-water" aria-hidden="true"><i></i><i></i><i></i></div>
+                    <img id="survivor-character" class="survivor-character" src="survivor.svg" alt="A strong, weathered island survivor crossing the rugged island">
                     <span id="scene-object" class="scene-object" aria-hidden="true"></span>
                     <span class="scene-caption" id="scene-caption">A quiet shore beneath a restless sky</span>
                 </div>
