@@ -1,0 +1,33 @@
+/* Optional ocean-audio control. */
+.sound-toggle {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    border: 1px solid rgb(115 224 208 / 38%);
+    color: #e7f6f1;
+    background: rgb(7 31 42 / 72%);
+    font-size: .88rem;
+}
+.sound-toggle::before {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #9fb6b5;
+    content: "";
+}
+.sound-toggle.is-on::before {
+    background: var(--teal);
+    box-shadow: 0 0 12px var(--teal);
+}
+.sound-help {
+    display: block;
+    margin-top: 5px;
+    color: #c1d5d2;
+    font-size: .75rem;
+}
+
+@media (max-width: 520px) {
+    .sound-toggle { margin-top: 12px; }
+}
