@@ -1,327 +1,102 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta
-        name="description"
-        content="Oche: Mystery Island is a text adventure. Explore the island, collect useful items and restore the lighthouse beacon."
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#102b35">
-
+    <meta name="description" content="Explore a mysterious island, collect what you need, and guide a rescue boat home in this illustrated browser adventure.">
     <title>Oche: Mystery Island</title>
-
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="game-enhancements.css">
     <script src="game.js" defer></script>
 </head>
-
 <body>
     <main class="app">
         <header class="site-header">
-            <p class="eyebrow">A TEXT ADVENTURE</p>
+            <p class="eyebrow">A COASTAL SURVIVAL ADVENTURE</p>
             <h1>Oche: Mystery Island</h1>
-            <p class="intro">
-                Explore the island, find what you need,
-                and guide the rescue boat home.
-            </p>
+            <p class="intro">The storm has passed. The lighthouse is dark. Make every step count.</p>
         </header>
 
-        <section id="start-screen" class="panel" aria-labelledby="start-title">
-            <h2 id="start-title">Your adventure begins</h2>
-
-            <p>
-                A storm has left you stranded on a mysterious island.
-                The lighthouse beacon is dark. Your mission is to
-                restore it before your energy runs out.
-            </p>
-
+        <section id="start-screen" class="panel start-panel" aria-labelledby="start-title">
+            <p class="eyebrow">YOUR STORY STARTS HERE</p>
+            <h2 id="start-title">Stranded beyond the old ocean</h2>
+            <p>Explore the island, find a rope and lantern, and light the ancient lighthouse before your energy runs out.</p>
             <form id="start-form">
-                <label for="player-name">What is your name?</label>
-
-                <input
-                    id="player-name"
-                    name="playerName"
-                    type="text"
-                    maxlength="40"
-                    autocomplete="given-name"
-                    placeholder="Enter your name"
-                    required
-                >
-
+                <label for="player-name">Explorer name</label>
+                <input id="player-name" name="playerName" type="text" maxlength="40" autocomplete="given-name" placeholder="Enter your name" required>
                 <p id="name-error" class="error" role="alert"></p>
-
-                <button type="submit" class="primary-button">
-                    Start adventure
-                </button>
+                <button type="submit" class="primary-button">Begin the adventure</button>
             </form>
+            <button id="continue-button" class="secondary-button continue-button" type="button" hidden>Continue saved adventure</button>
+            <p class="save-note">Your progress is saved in this browser on this device.</p>
         </section>
 
-        <section
-            id="game-screen"
-            class="game-layout"
-            aria-label="Game area"
-            hidden
-        >
-            <section class="status-grid" aria-label="Player status">
-                <article class="status-card">
-                    <span class="status-label">Explorer</span>
-                    <strong id="player-display">Player</strong>
-                </article>
-
-                <article class="status-card">
-                    <span class="status-label">Location</span>
-                    <strong id="location-display">Beach</strong>
-                </article>
-
-                <article class="status-card">
-                    <span class="status-label">Energy</span>
-                    <strong id="energy-display">5 / 5</strong>
-                </article>
+        <section id="game-screen" class="game-layout" aria-label="Game area" hidden>
+            <section class="status-grid" aria-label="Explorer status">
+                <article class="status-card"><span class="status-label">Explorer</span><strong id="player-display">Player</strong></article>
+                <article class="status-card"><span class="status-label">Location</span><strong id="location-display">Beach</strong></article>
+                <article class="status-card energy-card"><span class="status-label">Energy</span><strong id="energy-display">5 / 5</strong><progress id="energy-meter" max="5" value="5" aria-label="Energy remaining"></progress></article>
             </section>
 
-            <section class="panel adventure-panel">
+            <section class="panel adventure-panel" aria-labelledby="location-title">
                 <div class="section-heading">
-                    <div>
-                        <p class="eyebrow">YOUR SURROUNDINGS</p>
-                        <h2 id="location-title">Beach</h2>
-                    </div>
-
-                    <span id="beacon-status" class="status-pill">
-                        Beacon dark
-                    </span>
+                    <div><p class="eyebrow">CURRENT LOCATION</p><h2 id="location-title">Beach</h2></div>
+                    <span id="beacon-status" class="status-pill">Beacon dark</span>
                 </div>
 
-                <p id="location-description" aria-live="polite">
-                    You are standing on the beach.
-                </p>
-
-                <div class="divider"></div>
-
-                <h3>What would you like to do?</h3>
-
-                <div id="action-buttons" class="action-grid">
-                    <button id="look-button" class="secondary-button">
-                        Look around
-                    </button>
-
-                    <button id="inventory-button" class="secondary-button">
-                        View inventory
-                    </button>
-
-                    <button id="collect-button" class="secondary-button">
-                        Collect item
-                    </button>
-
-                    <button id="beacon-button" class="primary-button">
-                        Light beacon
-                    </button>
+                <div id="location-scene" class="location-scene scene-beach" role="img" aria-label="Illustrated beach on Mystery Island">
+                    <div class="scene-sky"><span class="scene-moon" aria-hidden="true"></span><span class="scene-cloud cloud-one" aria-hidden="true"></span><span class="scene-cloud cloud-two" aria-hidden="true"></span></div>
+                    <div class="scene-island" aria-hidden="true"><span class="scene-tree tree-one">♠</span><span class="scene-tree tree-two">♠</span><span class="scene-landmark" id="scene-landmark">⌂</span></div>
+                    <div class="scene-water" aria-hidden="true"><i></i><i></i><i></i></div>
+                    <span id="scene-object" class="scene-object" aria-hidden="true"></span>
+                    <span class="scene-caption" id="scene-caption">A quiet shore beneath a restless sky</span>
                 </div>
+                <p id="location-description" aria-live="polite">You are standing on the beach.</p>
 
-                <div class="divider"></div>
-
-                <h3>Available destinations</h3>
-                <div id="destinations" class="destination-list"></div>
-
-                <div class="divider"></div>
-
-                <h3>Your inventory</h3>
-                <p id="inventory-display">Your inventory is empty.</p>
-            </section>
-
-            <section class="panel log-panel">
-                <h2>Adventure log</h2>
-
-                <div
-                    id="game-log"
-                    class="game-log"
-                    role="log"
-                    aria-live="polite"
-                    aria-relevant="additions"
-                >
-                    <p>Your adventure has begun.</p>
+                <div class="game-columns">
+                    <section class="game-controls" aria-labelledby="actions-title">
+                        <h3 id="actions-title">Your actions</h3>
+                        <div class="action-grid">
+                            <button id="look-button" class="secondary-button" type="button">Look around</button>
+                            <button id="inventory-button" class="secondary-button" type="button">Check inventory</button>
+                            <button id="collect-button" class="secondary-button" type="button">Collect item</button>
+                            <button id="beacon-button" class="primary-button" type="button">Light beacon</button>
+                        </div>
+                        <h3>Island chart</h3>
+                        <p class="map-help">Choose a connected location to travel there. Each journey costs one energy.</p>
+                        <div id="island-map" class="island-map" role="group" aria-label="Island locations"></div>
+                    </section>
+                    <aside class="inventory-card" aria-labelledby="inventory-title">
+                        <h3 id="inventory-title">Your pack</h3>
+                        <p id="inventory-display" aria-live="polite">Your inventory is empty.</p>
+                        <ul class="quest-list">
+                            <li id="rope-quest">Find the rope in the Jungle</li>
+                            <li id="lantern-quest">Find the lantern in the Cave</li>
+                            <li id="beacon-quest">Light the lighthouse beacon</li>
+                        </ul>
+                    </aside>
                 </div>
             </section>
 
-            <!-- Animated victory scene -->
-            <section
-                id="victory-scene"
-                class="victory-scene"
-                aria-label="Lighthouse rescue animation"
-                aria-live="polite"
-                hidden
-            >
-                <div class="scene-heading">
-                    <p class="eyebrow">A SIGNAL IN THE DARK</p>
-                    <h2>The rescue has begun!</h2>
-                    <p id="victory-caption">
-                        The lighthouse beacon is shining across the sea...
-                    </p>
-                </div>
+            <section class="panel log-panel" aria-labelledby="log-title">
+                <div class="log-heading"><h2 id="log-title">Adventure journal</h2><span>YOUR STORY</span></div>
+                <div id="game-log" class="game-log" role="log" aria-live="polite" aria-relevant="additions"></div>
+            </section>
 
-                <div class="rescue-stage">
-                    <div class="stars" aria-hidden="true"></div>
-
-                    <div class="moon" aria-hidden="true"></div>
-
-                    <div class="lighthouse" aria-hidden="true">
-                        <div class="lighthouse-beam"></div>
-
-                        <svg
-                            viewBox="0 0 100 190"
-                            class="lighthouse-art"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M29 62 L71 62 L85 184 L15 184 Z"
-                                fill="#e8c995"
-                            />
-                            <path
-                                d="M29 62 L71 62 L85 184 L15 184 Z"
-                                fill="#bd9561"
-                                opacity=".3"
-                            />
-                            <path
-                                d="M25 62 L75 62 L68 45 L32 45 Z"
-                                fill="#e9ece9"
-                            />
-                            <rect
-                                x="29"
-                                y="24"
-                                width="42"
-                                height="22"
-                                rx="3"
-                                fill="#f2dcae"
-                            />
-                            <path
-                                d="M23 24 L77 24 L68 12 L32 12 Z"
-                                fill="#d75c4c"
-                            />
-                            <path
-                                d="M42 12 L50 2 L58 12 Z"
-                                fill="#d75c4c"
-                            />
-                            <rect
-                                x="42"
-                                y="29"
-                                width="16"
-                                height="14"
-                                rx="2"
-                                fill="#fff7c7"
-                            />
-                            <path
-                                d="M39 46 L61 46"
-                                stroke="#263e46"
-                                stroke-width="3"
-                            />
-                            <rect
-                                x="44"
-                                y="85"
-                                width="12"
-                                height="22"
-                                fill="#263e46"
-                            />
-                            <rect
-                                x="44"
-                                y="126"
-                                width="12"
-                                height="22"
-                                fill="#263e46"
-                            />
-                            <path
-                                d="M10 184 L90 184"
-                                stroke="#263e46"
-                                stroke-width="5"
-                            />
-                        </svg>
-                    </div>
-
-                    <svg
-                        class="rescue-boat"
-                        viewBox="0 0 180 90"
-                        role="img"
-                        aria-label="Rescue boat approaching the island"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M10 55 L170 55 L150 79 L38 79 Z"
-                            fill="#d75c4c"
-                        />
-                        <path
-                            d="M10 55 L170 55 L160 65 L20 65 Z"
-                            fill="#f4f1e8"
-                        />
-                        <rect
-                            x="63"
-                            y="25"
-                            width="62"
-                            height="30"
-                            rx="5"
-                            fill="#f4f1e8"
-                        />
-                        <rect
-                            x="76"
-                            y="31"
-                            width="16"
-                            height="15"
-                            fill="#67b8bd"
-                        />
-                        <rect
-                            x="98"
-                            y="31"
-                            width="16"
-                            height="15"
-                            fill="#67b8bd"
-                        />
-                        <path
-                            d="M92 25 L92 9"
-                            stroke="#f4f1e8"
-                            stroke-width="4"
-                        />
-                        <path
-                            d="M92 10 L112 10"
-                            stroke="#d75c4c"
-                            stroke-width="5"
-                        />
-                        <path
-                            d="M30 84 Q50 75 70 84 T110 84 T150 84"
-                            fill="none"
-                            stroke="#67d5c1"
-                            stroke-width="3"
-                        />
-                    </svg>
-
+            <section id="victory-scene" class="victory-scene" aria-label="Lighthouse rescue animation" aria-live="polite" hidden>
+                <div class="scene-heading"><p class="eyebrow">A SIGNAL IN THE DARK</p><h2>The rescue has begun!</h2><p>The lighthouse beacon is shining across the sea...</p></div>
+                <div class="rescue-stage"><div class="stars" aria-hidden="true"></div><div class="moon" aria-hidden="true"></div>
+                    <div class="lighthouse" aria-hidden="true"><div class="lighthouse-beam"></div><svg viewBox="0 0 100 190" class="lighthouse-art" xmlns="http://www.w3.org/2000/svg"><path d="M29 62 71 62 85 184 15 184Z" fill="#e8c995"/><path d="M25 62h50L68 45H32Z" fill="#e9ece9"/><rect x="29" y="24" width="42" height="22" rx="3" fill="#f2dcae"/><path d="M23 24h54L68 12H32Z" fill="#d75c4c"/><path d="m42 12 8-10 8 10Z" fill="#d75c4c"/><rect x="42" y="29" width="16" height="14" rx="2" fill="#fff7c7"/><rect x="44" y="85" width="12" height="22" fill="#263e46"/><rect x="44" y="126" width="12" height="22" fill="#263e46"/></svg></div>
+                    <svg class="rescue-boat" viewBox="0 0 180 90" role="img" aria-label="Rescue boat approaching the island" xmlns="http://www.w3.org/2000/svg"><path d="M10 55h160l-20 24H38Z" fill="#d75c4c"/><path d="M63 25h62v30H63z" rx="5" fill="#f4f1e8"/><rect x="76" y="31" width="16" height="15" fill="#67b8bd"/><rect x="98" y="31" width="16" height="15" fill="#67b8bd"/><path d="M30 84q20-9 40 0t40 0 40 0" fill="none" stroke="#67d5c1" stroke-width="3"/></svg>
                     <div class="ocean-waves" aria-hidden="true"></div>
-                </div>
-
-                <p class="scene-status">
-                    <span class="loading-indicator"></span>
-                    A rescue boat is approaching...
-                </p>
+                </div><p class="scene-status"><span class="loading-indicator"></span>A rescue boat is approaching...</p>
             </section>
 
-            <section id="ending-panel" class="panel ending-panel" hidden>
-                <h2 id="ending-title">Adventure ended</h2>
-                <p id="ending-message"></p>
-
-                <button id="replay-button" class="primary-button">
-                    Play again
-                </button>
-            </section>
-
-            <div class="quit-area">
-                <button id="quit-button" class="text-button">
-                    Quit adventure
-                </button>
-            </div>
+            <section id="ending-panel" class="panel ending-panel" aria-live="polite" hidden><h2 id="ending-title">Adventure ended</h2><p id="ending-message"></p><button id="replay-button" class="primary-button" type="button">Play again</button></section>
+            <div class="quit-area"><button id="quit-button" class="text-button" type="button">End this adventure</button></div>
         </section>
-
-        <footer class="site-footer">
-            <p>Oche: Mystery Island</p>
-            <p>Built with Python, HTML, CSS and JavaScript.</p>
-        </footer>
+        <footer class="site-footer"><p>OCHE: MYSTERY ISLAND</p><p>Explore carefully. The old ocean keeps its own time.</p></footer>
     </main>
 </body>
 </html>

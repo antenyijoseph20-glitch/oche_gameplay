@@ -1,0 +1,55 @@
+/* Browser-game scene, map and save-state presentation. */
+.start-panel { position: relative; overflow: hidden; }
+.start-panel::after { position: absolute; right: -24px; bottom: -28px; width: 190px; height: 150px; border-radius: 100% 0 0; background: linear-gradient(145deg, transparent 30%, rgb(59 114 91 / 35%) 31%), radial-gradient(ellipse at 70% 100%, #9b8560 0 28%, transparent 29%); content: ""; pointer-events: none; }
+.start-panel > * { position: relative; z-index: 1; }
+.start-panel > p:not(.eyebrow):not(.error) { max-width: 580px; color: #d4e2df; }
+.continue-button { margin-top: 12px; }
+.save-note { color: var(--muted); font-size: .82rem; }
+.energy-card { grid-template-columns: 1fr auto; align-items: center; }
+.energy-card .status-label { grid-column: 1; }
+.energy-card strong { grid-column: 2; grid-row: 1 / span 2; }
+.energy-card progress { width: 100%; height: 7px; grid-column: 1; accent-color: var(--teal); }
+.location-scene { --scene-accent: #d8c28e; position: relative; height: clamp(190px, 30vw, 290px); overflow: hidden; margin: 18px 0 15px; border: 1px solid rgb(154 208 200 / 28%); border-radius: 15px; isolation: isolate; background: linear-gradient(#1b4051 0%, #496a69 57%, #d2a975 58%, #765b43 100%); }
+.scene-sky { position: absolute; inset: 0 0 38%; overflow: hidden; background: linear-gradient(180deg, #102637, #52747a); transition: background 500ms ease; }
+.scene-moon { position: absolute; top: 16%; right: 16%; width: 44px; height: 44px; border-radius: 50%; background: #f0dfb8; box-shadow: 0 0 34px 12px rgb(240 223 184 / 20%); }
+.scene-cloud { position: absolute; width: 115px; height: 20px; border-radius: 50%; background: rgb(196 213 201 / 13%); filter: blur(7px); animation: cloud-drift 23s linear infinite alternate; }
+.cloud-one { top: 29%; left: 18%; }.cloud-two { top: 58%; left: 64%; animation-duration: 31s; }
+.scene-island { position: absolute; z-index: 1; right: -6%; bottom: 28%; left: -5%; height: 53%; border-radius: 50% 50% 0 0 / 55% 55% 0 0; background: linear-gradient(165deg, #60735a, #263d38 75%); transition: background 500ms ease; }
+.scene-tree { position: absolute; bottom: 36%; color: #1d382e; font-size: clamp(3rem, 8vw, 6rem); text-shadow: 8px 6px 0 #294537; }
+.tree-one { left: 20%; }.tree-two { left: 31%; bottom: 28%; font-size: clamp(2.5rem, 6vw, 4.5rem); }
+.scene-landmark { position: absolute; right: 18%; bottom: 30%; color: #f0d7a7; font: 700 clamp(3.2rem, 8vw, 6.2rem)/1 Georgia, serif; text-shadow: 0 0 20px rgb(243 216 163 / 30%); }
+.scene-water { position: absolute; z-index: 2; right: -10%; bottom: 0; left: -10%; height: 33%; background: repeating-linear-gradient(176deg, transparent 0 22px, rgb(164 223 213 / 19%) 23px 25px, transparent 26px 48px), linear-gradient(#246071, #0b3042); animation: water-shift 7s ease-in-out infinite alternate; }
+.scene-water i { position: absolute; left: 10%; width: 23%; height: 2px; background: rgb(210 235 220 / 30%); }.scene-water i:nth-child(1) { top: 25%; }.scene-water i:nth-child(2) { top: 55%; left: 54%; width: 18%; }.scene-water i:nth-child(3) { top: 78%; left: 78%; width: 14%; }
+.scene-object { position: absolute; z-index: 3; right: 22%; bottom: 23%; font-size: 2.2rem; filter: drop-shadow(0 5px 8px #081c21); animation: object-float 2.4s ease-in-out infinite alternate; }
+.scene-caption { position: absolute; z-index: 4; bottom: 12px; left: 14px; color: #fff3d4; font-size: .83rem; font-weight: 700; text-shadow: 0 2px 6px #05131a; }
+.scene-jungle { background: linear-gradient(#102a32, #375b4b 59%, #3c4937 60%, #182c2c); }.scene-jungle .scene-sky { background: linear-gradient(#142b32, #536951); }.scene-jungle .scene-island { background: linear-gradient(160deg, #566e49, #1d392f 75%); }
+.scene-cave { background: linear-gradient(#071621, #24404a 60%, #124052 61%, #082b3c); }.scene-cave .scene-sky { background: radial-gradient(ellipse at 55% 85%, #547c80, #142d3a 70%); }.scene-cave .scene-island { right: 8%; left: 8%; height: 74%; border-radius: 48% 48% 0 0; background: #111f2a; }
+.scene-bridge { background: linear-gradient(#162d3a, #4a6670 58%, #16465a 59%, #092e40); }.scene-bridge .scene-island { height: 20%; border-radius: 0; background: #35413a; }.scene-bridge .scene-landmark { right: 27%; bottom: 23%; transform: rotate(-8deg); }
+.scene-lighthouse { background: linear-gradient(#101e31, #44536d 58%, #165064 59%, #082a3a); }.scene-lighthouse .scene-sky { background: linear-gradient(#101d31, #5c6272); }.scene-lighthouse .scene-island { background: linear-gradient(160deg, #53664d, #213932 75%); }.scene-lighthouse .scene-landmark { color: #fff0b0; text-shadow: 0 0 26px #ffe38a; }
+.scene-lighthouse .scene-landmark::after { position: absolute; top: 12%; left: 45%; width: 170px; height: 95px; background: linear-gradient(90deg, rgb(255 235 159 / 36%), transparent); clip-path: polygon(0 0, 100% -30%, 100% 130%, 0 0); content: ""; animation: beam-glow 3s ease-in-out infinite alternate; transform-origin: left center; }
+.scene-beach .scene-island { right: -22%; left: 50%; opacity: .8; }
+.beacon-active .scene-landmark { color: #fff4bd; filter: drop-shadow(0 0 18px #ffe38a); }
+.location-scene.item-found .scene-object { animation: item-pop 650ms cubic-bezier(.2, 1.6, .45, 1) both; }
+.game-columns { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(210px, .8fr); gap: 20px; align-items: start; }
+.game-controls h3, .inventory-card h3 { margin-top: 12px; }
+.map-help { margin: 0 0 12px; color: var(--muted); font-size: .88rem; }
+.island-map { display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 14px 10px; border: 1px solid rgb(115 224 208 / 18%); border-radius: 13px; background: rgb(4 24 33 / 55%); }
+.map-node { min-width: 0; min-height: 42px; padding: 7px 9px; color: #c6d9d5; background: #183c48; font-size: .76rem; line-height: 1.15; }
+.map-node.is-current { border-color: var(--sand); color: #211b13; background: var(--sand); box-shadow: 0 0 15px rgb(246 215 157 / 24%); }
+.map-node.is-reachable:not(:disabled) { border-color: var(--teal); color: #e9fffb; background: #1d5960; }
+.map-node:disabled:not(.is-current) { opacity: .55; }
+.map-connector { height: 2px; min-width: 7px; flex: 1; background: rgb(128 179 174 / 30%); }
+.inventory-card { border: 1px solid rgb(246 215 157 / 22%); border-radius: 14px; padding: 15px; background: rgb(13 37 43 / 70%); }
+.inventory-card h3 { margin-top: 0; }
+#inventory-display { min-height: 1.5em; color: #fff1c8; font-weight: 700; }
+.quest-list { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: .87rem; }
+.quest-list li::before { display: inline-grid; width: 20px; height: 20px; margin-right: 7px; place-items: center; border: 1px solid rgb(183 201 200 / 45%); border-radius: 50%; content: ""; vertical-align: middle; }
+.quest-list li.is-complete { color: var(--teal); text-decoration: line-through; }.quest-list li.is-complete::before { border-color: var(--teal); background: var(--teal); color: #09262d; content: "✓"; text-decoration: none; }
+.log-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }.log-heading h2 { margin-bottom: 12px; }.log-heading span { color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .14em; }
+@keyframes water-shift { from { background-position: 0 0, 0 0; } to { background-position: 55px 8px, 0 0; } }
+@keyframes cloud-drift { from { transform: translateX(-8px); } to { transform: translateX(25px); } }
+@keyframes object-float { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-8px) rotate(4deg); } }
+@keyframes item-pop { 0% { transform: scale(.2) translateY(14px); opacity: .2; } 70% { transform: scale(1.35) translateY(-12px); } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+@keyframes beam-glow { from { opacity: .35; transform: rotate(-10deg); } to { opacity: .9; transform: rotate(12deg); } }
+@media (max-width: 720px) { .game-columns { grid-template-columns: 1fr; }.island-map { gap: 2px; padding-inline: 5px; }.map-node { padding: 6px 4px; font-size: .67rem; }.map-connector { min-width: 3px; } }
+@media (prefers-reduced-motion: reduce) { .scene-water, .scene-cloud, .scene-object, .scene-lighthouse .scene-landmark::after { animation: none !important; }.location-scene.item-found .scene-object { animation: none !important; } }
